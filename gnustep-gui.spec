@@ -1,22 +1,22 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.9.0
+Version:	0.9.1
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	d8fd5b87bc0673684c643194a4f10aa9
+# Source0-md5:	327931f757d36cf135a7c3ce5f84e51d
 Patch0:		%{name}-themes.patch
 Patch2:		%{name}-nocompressdocs.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.8.0
+BuildRequires:	gnustep-base-devel >= 1.9.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.8.0
+Requires:	gnustep-base >= 1.9.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -137,13 +137,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/%{gscpu}
 
-%dir %{_prefix}/System/Applications/md5Digest.app
-%dir %{_prefix}/System/Applications/md5Digest.app/Resources
-%{_prefix}/System/Applications/md5Digest.app/Resources/*.desktop
-%{_prefix}/System/Applications/md5Digest.app/Resources/*.plist
-%attr(755,root,root) %{_prefix}/System/Applications/md5Digest.app/%{gscpu}
-%attr(755,root,root) %{_prefix}/System/Applications/md5Digest.app/md5Digest
-
 %{_prefix}/System/Library/Images/*
 %{_prefix}/System/Library/KeyBindings/*.dict
 
@@ -167,9 +160,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/System/Library/Services/GSspell.service
 %{_prefix}/System/Library/Services/GSspell.service/Resources
 %attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service/%{gscpu}
-%dir %{_prefix}/System/Library/Services/example.service
-%{_prefix}/System/Library/Services/example.service/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Services/example.service/%{gscpu}
 
 %attr(755,root,root) %{_prefix}/System/Tools/%{gscpu}/%{gsos}/%{libcombo}/*
 
