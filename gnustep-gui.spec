@@ -6,7 +6,7 @@ Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	a3da917a6ac77917ddfaddf356a8a469
+# Source0-md5:	cf555e09fb1074a74e850ccfc5c6652b
 Patch0: %{name}-themes.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
