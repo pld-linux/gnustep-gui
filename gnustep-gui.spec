@@ -2,7 +2,7 @@ Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.8.8
-Release:	1
+Release:	2
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
@@ -11,11 +11,11 @@ Patch0:		%{name}-themes.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.7.0
+BuildRequires:	gnustep-base-devel >= 1.7.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.7.0
+Requires:	gnustep-base >= 1.7.3
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -55,7 +55,7 @@ Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	audiofile-devel
-Requires:	gnustep-base-devel >= 1.7.0
+Requires:	gnustep-base-devel >= 1.7.3
 Requires:	libjpeg-devel
 Requires:	libtiff-devel
 Conflicts:	gnustep-core
@@ -169,8 +169,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/Documentation/Developer/Gui/Reference
 %{_prefix}/System/Library/Documentation/info/*.info*
 
-%{_prefix}/System/Library/Headers/AppKit
-%{_prefix}/System/Library/Headers/gnustep/gui
+%{_prefix}/System/Library/Headers/%{libcombo}/AppKit
+%{_prefix}/System/Library/Headers/%{libcombo}/gnustep/gui
 
 %{_prefix}/System/Library/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so
 %{_prefix}/System/Library/Makefiles/Additional/gui.make
