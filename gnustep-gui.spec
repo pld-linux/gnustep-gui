@@ -9,7 +9,7 @@ Version: 	%{ver}
 Release: 	1
 Source: 	ftp://ftp.gnustep.org/pub/gnustep/core/gstep-gui-%{ver}.tar.gz
 #Source: 	/cvs/gnustep-gui-%{ver}-%{date}.tar.gz
-Patch:          gstep-gui-0.6.0-headers.patch
+Patch:          gstep-gui-headers.patch
 Copyright: 	GPL
 Group: 		Development/Tools
 Summary: 	GNUstep GUI library package
