@@ -1,23 +1,22 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.8.9
+Version:	0.9.0
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	294b03e9c39e6f08c56ff66abade121e
+# Source0-md5:	d8fd5b87bc0673684c643194a4f10aa9
 Patch0:		%{name}-themes.patch
-Patch1:		%{name}-target.patch
 Patch2:		%{name}-nocompressdocs.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.7.3
+BuildRequires:	gnustep-base-devel >= 1.8.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.7.3
+Requires:	gnustep-base >= 1.8.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -73,7 +72,6 @@ biblioteki GNUstep GUI.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
 %patch2 -p1
 
 %build
@@ -88,6 +86,9 @@ rm -rf $RPM_BUILD_ROOT
 . %{_prefix}/System/Library/Makefiles/GNUstep.sh
 
 %{__make} install \
+	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
+	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT
+%{__make} install -C Documentation \
 	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
 	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT
 
