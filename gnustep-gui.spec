@@ -6,9 +6,6 @@ Release:	1
 License:	GPL
 Vendor:		The Seawood Project
 Group:		Development/Tools
-Group(de):	Entwicklung/Werkzeuge
-Group(fr):	Development/Outils
-Group(pl):	Programowanie/Narzêdzia
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
 Patch0:		gstep-gui-headers.patch
 URL:		http://www.gnustep.org/
@@ -41,13 +38,6 @@ obs³ugi zdarzeñ, kolorów, fontów i obrazków.
 Summary:	GNUstep GUI headers and libs
 Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}, gnustep-base-devel
 Conflicts:	gnustep-core
 
