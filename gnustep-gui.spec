@@ -4,8 +4,7 @@ Name:		gnustep-gui
 Version:	0.8.3
 Release:	1
 License:	LGPL/GPL
-Vendor:		The GNUstep Project
-Group:		Development/Tools
+Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
