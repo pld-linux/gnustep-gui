@@ -1,20 +1,20 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.8.5
+Version:	0.8.7
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	ddaf662db31a4e6b382499548e9efcf4
+# Source0-md5:	a3da917a6ac77917ddfaddf356a8a469
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel
+BuildRequires:	gnustep-base-devel >= 1.7.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base
+Requires:	gnustep-base >= 1.7.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -54,7 +54,7 @@ Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	audiofile-devel
-Requires:	gnustep-base-devel
+Requires:	gnustep-base-devel >= 1.7.0
 Requires:	libjpeg-devel
 Requires:	libtiff-devel
 Conflicts:	gnustep-core
@@ -71,27 +71,22 @@ biblioteki GNUstep GUI.
 %setup -q
 
 %build
-. %{_prefix}/System/Makefiles/GNUstep.sh
+. %{_prefix}/System/Library/Makefiles/GNUstep.sh
 %configure
 
 %{__make} \
 	messages=yes
 
-%{__make} -C Documentation
-
 %install
 rm -rf $RPM_BUILD_ROOT
-. %{_prefix}/System/Makefiles/GNUstep.sh
+. %{_prefix}/System/Library/Makefiles/GNUstep.sh
 
 %{__make} install \
 	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
 	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT
 
-%{__make} install -C Documentation \
-	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System
-
 # not (yet?) supported by rpm-compress-doc
-find $RPM_BUILD_ROOT%{_prefix}/System/Documentation \
+find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
 	-type f -a ! -name '*.html' | xargs gzip -9nf
 
 %clean
@@ -104,26 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog
 
-%{_prefix}/System/Documentation/info/*.info*
-
-%{_prefix}/System/Libraries/Resources/English.lproj/*
-%{_prefix}/System/Libraries/Resources/Images
-%{_prefix}/System/Libraries/Resources/KeyBindings
-%dir %{_prefix}/System/Libraries/Resources/PrinterTypes
-%{_prefix}/System/Libraries/Resources/PrinterTypes/GSProlog.ps
-%{_prefix}/System/Libraries/Resources/PrinterTypes/Printers
-%{_prefix}/System/Libraries/Resources/PrinterTypes/English.lproj
-%lang(fr) %{_prefix}/System/Libraries/Resources/PrinterTypes/French.lproj
-%lang(de) %{_prefix}/System/Libraries/Resources/PrinterTypes/German.lproj
-%lang(it) %{_prefix}/System/Libraries/Resources/PrinterTypes/Italian.lproj
-%lang(es) %{_prefix}/System/Libraries/Resources/PrinterTypes/Spanish.lproj
-%lang(sv) %{_prefix}/System/Libraries/Resources/PrinterTypes/Swedish.lproj
-%dir %{_prefix}/System/Libraries/Resources/gnustep-gui
-%dir %{_prefix}/System/Libraries/Resources/gnustep-gui/Resources
-%{_prefix}/System/Libraries/Resources/gnustep-gui/Resources/English.lproj
-%lang(it) %{_prefix}/System/Libraries/Resources/gnustep-gui/Resources/Italian.lproj
-
-%{_prefix}/System/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so.*
+%docdir %{_prefix}/System/Library/Documentation
+%dir %{_prefix}/System/Library/Documentation/Developer/Gui
+%{_prefix}/System/Library/Documentation/Developer/Gui/ReleaseNotes
 
 %dir %{_prefix}/System/Library/Bundles/TextConverters
 %dir %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle
@@ -132,6 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/System/Library/Bundles/libgmodel.bundle
 %{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/%{gscpu}
+
 %dir %{_prefix}/System/Library/ColorPickers
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources
@@ -145,7 +124,25 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/%{gscpu}
 
-%{_prefix}/System/Library/Model
+%{_prefix}/System/Library/Images/*
+%{_prefix}/System/Library/KeyBindings/*.dict
+
+%dir %{_prefix}/System/Library/Libraries/Resources/gnustep-gui
+%{_prefix}/System/Library/Libraries/Resources/gnustep-gui/English.lproj
+%lang(it) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Italian.lproj
+
+%{_prefix}/System/Library/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so.*
+
+%dir %{_prefix}/System/Library/PostScript
+%{_prefix}/System/Library/PostScript/GSProlog.ps
+%{_prefix}/System/Library/PostScript/Printers
+%dir %{_prefix}/System/Library/PostScript/PPD
+%{_prefix}/System/Library/PostScript/PPD/English.lproj
+%lang(fr) %{_prefix}/System/Library/PostScript/PPD/French.lproj
+%lang(de) %{_prefix}/System/Library/PostScript/PPD/German.lproj
+%lang(it) %{_prefix}/System/Library/PostScript/PPD/Italian.lproj
+%lang(es) %{_prefix}/System/Library/PostScript/PPD/Spanish.lproj
+%lang(sv) %{_prefix}/System/Library/PostScript/PPD/Swedish.lproj
 
 %dir %{_prefix}/System/Library/Services/GSspell.service
 %{_prefix}/System/Library/Services/GSspell.service/Resources
@@ -158,8 +155,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_prefix}/System/Documentation/Developer/Gui
-%{_prefix}/System/Headers/AppKit
-%{_prefix}/System/Headers/gnustep/gui
-%{_prefix}/System/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so
-%{_prefix}/System/Makefiles/Additional/gui.make
+%docdir %{_prefix}/System/Library/Documentation
+%{_prefix}/System/Library/Documentation/Developer/Gui/Manual
+%{_prefix}/System/Library/Documentation/Developer/Gui/Reference
+%{_prefix}/System/Library/Documentation/info/*.info*
+
+%{_prefix}/System/Library/Headers/AppKit
+%{_prefix}/System/Library/Headers/gnustep/gui
+
+%{_prefix}/System/Library/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so
+%{_prefix}/System/Library/Makefiles/Additional/gui.make
