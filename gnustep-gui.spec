@@ -57,7 +57,7 @@ if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
 fi
 install -d ${RPM_BUILD_ROOT}%{_prefix}/GNUstep/Library/Services
 
-make install GNUSTEP_INSTALLATION_DIR=${RPM_BUILD_ROOT}%{_prefix}/GNUstep
+%{__make} install GNUSTEP_INSTALLATION_DIR=${RPM_BUILD_ROOT}%{_prefix}/GNUstep
 
 cat > filelist.rpm.in << EOF
 %defattr (-, bin, bin)
@@ -107,7 +107,10 @@ rm -rf $RPM_BUILD_ROOT
 All persons listed below can be reached at <cvs_login>@pld.org.pl
 
 $Log: gnustep-gui.spec,v $
-Revision 1.3  2000-05-20 13:37:50  kloczek
+Revision 1.4  2000-06-09 07:22:52  kloczek
+- added using %%{__make} macro.
+
+Revision 1.3  2000/05/20 13:37:50  kloczek
 - spec adapterized and partialy rewrited.
 
 * Sat Sep 18 1999 Christopher Seawood <cls@seawood.org>
