@@ -1,13 +1,15 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.8.8
-Release:	2
+Version:	0.8.9
+Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	cf555e09fb1074a74e850ccfc5c6652b
+# Source0-md5:	294b03e9c39e6f08c56ff66abade121e
 Patch0:		%{name}-themes.patch
+Patch1:		%{name}-target.patch
+Patch2:		%{name}-nocompressdocs.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
@@ -71,6 +73,8 @@ biblioteki GNUstep GUI.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
+%patch2 -p1
 
 %build
 . %{_prefix}/System/Library/Makefiles/GNUstep.sh
@@ -125,6 +129,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle
 %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/%{gscpu}
+%{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
+%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/%{gscpu}
 
 %dir %{_prefix}/System/Applications/md5Digest.app
 %dir %{_prefix}/System/Applications/md5Digest.app/Resources
@@ -165,11 +171,12 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %docdir %{_prefix}/System/Library/Documentation
-%{_prefix}/System/Library/Documentation/Developer/Gui/Manual
-%{_prefix}/System/Library/Documentation/Developer/Gui/Reference
-%{_prefix}/System/Library/Documentation/info/*.info*
+%{_prefix}/System/Library/Documentation/Developer/Gui
+%{_prefix}/System/Library/Documentation/User/Gui
+%{_prefix}/System/Library/Documentation/man/man1/*
 
 %{_prefix}/System/Library/Headers/%{libcombo}/AppKit
+%{_prefix}/System/Library/Headers/%{libcombo}/GNUstepGUI
 %{_prefix}/System/Library/Headers/%{libcombo}/gnustep/gui
 
 %{_prefix}/System/Library/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so
