@@ -1,4 +1,5 @@
 Summary:	GNUstep GUI library package
+Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.6.0
 Release:	1
@@ -9,7 +10,6 @@ Group(de):	Entwicklung/Werkzeuge
 Group(fr):	Development/Outils
 Group(pl):	Programowanie/NarzÍdzia
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-Source0:	/cvs/%{name}-%{version}-%{date}.tar.gz
 Patch0:		gstep-gui-headers.patch
 URL:		http://www.gnustep.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -28,18 +28,36 @@ handling events, colors, fonts, pasteboards and images.
 
 Library combo is %{libcombo}. %{_buildblurb}
 
+%description -l pl
+To jest biblioteka klas graficznego interfejsu uøytkownika napisana w
+Objective-C. Klasy bazuj± na specyfikacji OpenStep wypuszczonej przez
+NeXT Software. Biblioteka nie jest ca≥kowicie zgodna ze specyfikacj± i
+zosta≥a rozszerzona, aby wykorzystaÊ moøliwo∂ci systemu GNU. Klasy
+zawieraj± graficzne obiekty takie jak przyciski, pola tekstowe, listy
+rozwijane, listy przewijane i okienka; jest takøe wiele klas do
+obs≥ugi zdarzeÒ, kolorÛw, fontÛw i obrazkÛw.
+
 %package devel
-Summary:	GNUstep GUI headers and libs.
+Summary:	GNUstep GUI headers and libs
+Summary(pl):	Pliki nag≥Ûwkowe GNUstep GUI
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
+Group(uk):	Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name} = %{version}, gnustep-base-devel
 Conflicts:	gnustep-core
 
 %description devel
 Header files required to build applications against the GNUstep GUI
 library. Library combo is %{libcombo}. %{_buildblurb}
+
+%description devel -l pl
+Pliki nag≥Ûwkowe potrzebne do budowania aplikacji korzystaj±cych z
+biblioteki GNUstep GUI.
 
 %prep
 %setup -q -n gstep-%{ver}/gui
@@ -92,11 +110,11 @@ sed -e "s|GSARCH|${GNUSTEP_HOST_CPU}|" -e "s|GSOS|${GNUSTEP_HOST_OS}|" < filelis
 
 # Don't worry about ld.so.conf on linux as gnustep-base should take care of it.
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f filelist.rpm
 %defattr(644,root,root,755)
