@@ -55,7 +55,7 @@ biblioteki GNUstep GUI.
 
 %build
 if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
-   . %{_prefix}/GNUstep/Makefiles/GNUstep.sh 
+   . %{_prefix}/GNUstep/Makefiles/GNUstep.sh
 fi
 CFLAGS="%{rpmcflags}" ./configure --prefix=%{_prefix}/GNUstep --with-library-combo=%{libcombo}
 %{__make}
@@ -63,7 +63,7 @@ CFLAGS="%{rpmcflags}" ./configure --prefix=%{_prefix}/GNUstep --with-library-com
 %install
 rm -rf $RPM_BUILD_ROOT
 if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
-   . %{_prefix}/GNUstep/Makefiles/GNUstep.sh 
+   . %{_prefix}/GNUstep/Makefiles/GNUstep.sh
 fi
 install -d ${RPM_BUILD_ROOT}%{_prefix}/GNUstep/Library/Services
 
