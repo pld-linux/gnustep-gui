@@ -91,6 +91,8 @@ rm -rf $RPM_BUILD_ROOT
 	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
 	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT
 
+find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
+	-type f -name .cvsignore | xargs rm -f
 # not (yet?) supported by rpm-compress-doc
 find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
 	-type f -a ! -name '*.html' | xargs gzip -9nf
@@ -108,6 +110,8 @@ rm -rf $RPM_BUILD_ROOT
 %docdir %{_prefix}/System/Library/Documentation
 %dir %{_prefix}/System/Library/Documentation/Developer/Gui
 %{_prefix}/System/Library/Documentation/Developer/Gui/ReleaseNotes
+%{_prefix}/System/Library/Documentation/User/Gui
+%{_prefix}/System/Library/Documentation/man/man1/*
 
 %dir %{_prefix}/System/Library/Bundles/TextConverters
 %dir %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle
@@ -171,9 +175,8 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %docdir %{_prefix}/System/Library/Documentation
-%{_prefix}/System/Library/Documentation/Developer/Gui
-%{_prefix}/System/Library/Documentation/User/Gui
-%{_prefix}/System/Library/Documentation/man/man1/*
+%{_prefix}/System/Library/Documentation/Developer/Gui/Additions
+%{_prefix}/System/Library/Documentation/Developer/Gui/Reference
 
 %{_prefix}/System/Library/Headers/%{libcombo}/AppKit
 %{_prefix}/System/Library/Headers/%{libcombo}/GNUstepGUI
