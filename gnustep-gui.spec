@@ -1,16 +1,16 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.9.3
+Version:	0.9.4
 Release:	2
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	e2ba2576a79ff00e414ff10bb6055423
+# Source0-md5:	399b3a2341899d12710f4d1ed36f3002
 Patch0:		%{name}-themes.patch
 Patch2:		%{name}-nocompressdocs.patch
 Patch3:		%{name}-segv.patch
-Patch4:		%{name}-include.patch
+#Patch4:		%{name}-include.patch
 Patch5:		%{name}-doc.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
@@ -77,7 +77,7 @@ biblioteki GNUstep GUI.
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 %patch5 -p1
 
 %build
@@ -104,6 +104,8 @@ find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
 find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
 	-type f -a ! -name '*.html' | xargs gzip -9nf
 
+mv $RPM_BUILD_ROOT/usr/lib/GNUstep/System/Library/Documentation/info/manual.info.gz $RPM_BUILD_ROOT/usr/lib/GNUstep/System/Library/Documentation/info/gnustep-gui.info.gz
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -127,6 +129,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/System/Library/Bundles/libgmodel.bundle
 %{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/%{gscpu}
+
+%dir %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle
+%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/Resources
+%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/%{gscpu}
+
 
 %dir %{_prefix}/System/Library/ColorPickers
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle
@@ -155,15 +162,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_prefix}/System/Library/PostScript
 %{_prefix}/System/Library/PostScript/GSProlog.ps
-%{_prefix}/System/Library/PostScript/Printers
 %dir %{_prefix}/System/Library/PostScript/PPD
 %{_prefix}/System/Library/PostScript/PPD/English.lproj
-%lang(fr) %{_prefix}/System/Library/PostScript/PPD/French.lproj
-%lang(de) %{_prefix}/System/Library/PostScript/PPD/German.lproj
-%lang(it) %{_prefix}/System/Library/PostScript/PPD/Italian.lproj
-%lang(es) %{_prefix}/System/Library/PostScript/PPD/Spanish.lproj
-%lang(sv) %{_prefix}/System/Library/PostScript/PPD/Swedish.lproj
-
 %dir %{_prefix}/System/Library/Services/GSspell.service
 %{_prefix}/System/Library/Services/GSspell.service/Resources
 %attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service/%{gscpu}
@@ -175,8 +175,9 @@ rm -rf $RPM_BUILD_ROOT
 %docdir %{_prefix}/System/Library/Documentation
 %{_prefix}/System/Library/Documentation/Developer/Gui/Additions
 %{_prefix}/System/Library/Documentation/Developer/Gui/General
-%{_prefix}/System/Library/Documentation/Developer/Gui/Manual
+%{_prefix}/System/Library/Documentation/Developer/Gui/ProgrammingManual
 %{_prefix}/System/Library/Documentation/Developer/Gui/Reference
+%{_prefix}/System/Library/Documentation/Developer/Gui/ReleaseNotes
 %{_prefix}/System/Library/Documentation/info/gnustep-gui.info*
 
 %{_prefix}/System/Library/Headers/%{libcombo}/AppKit
