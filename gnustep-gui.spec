@@ -1,15 +1,17 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.9.2
+Version:	0.9.3
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	109b6e44eea028de14c2a8346674b6b6
+# Source0-md5:	e2ba2576a79ff00e414ff10bb6055423
 Patch0:		%{name}-themes.patch
 Patch2:		%{name}-nocompressdocs.patch
 Patch3:		%{name}-segv.patch
+Patch4:		%{name}-include.patch
+Patch5:		%{name}-doc.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
@@ -21,7 +23,7 @@ Requires:	gnustep-base >= 1.9.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define         _prefix         /usr/lib/GNUstep
+%define         _prefix         /usr/%{_lib}/GNUstep
 
 %define		libcombo	gnu-gnu-gnu
 %define		gsos		linux-gnu
@@ -29,7 +31,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		gscpu		ix86
 %else
 # also s/alpha.*/alpha/, but we use only "alpha" arch for now
-%define		gscpu		%{_target_cpu}
+%define		gscpu		%(echo %{_target_cpu} | sed -e 's/amd64/x86_64/;s/ppc/powerpc/')
 %endif
 
 %description
@@ -55,9 +57,9 @@ obs³ugi zdarzeñ, kolorów, fontów i obrazków.
 Summary:	GNUstep GUI headers and libs
 Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	audiofile-devel
-Requires:	gnustep-base-devel >= 1.7.3
+Requires:	gnustep-base-devel >= 1.9.0
 Requires:	libjpeg-devel
 Requires:	libtiff-devel
 Conflicts:	gnustep-core
@@ -75,6 +77,8 @@ biblioteki GNUstep GUI.
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 . %{_prefix}/System/Library/Makefiles/GNUstep.sh
@@ -169,7 +173,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %docdir %{_prefix}/System/Library/Documentation
 %{_prefix}/System/Library/Documentation/Developer/Gui/Additions
+%{_prefix}/System/Library/Documentation/Developer/Gui/General
+%{_prefix}/System/Library/Documentation/Developer/Gui/Manual
 %{_prefix}/System/Library/Documentation/Developer/Gui/Reference
+%{_prefix}/System/Library/Documentation/info/gnustep-gui.info*
 
 %{_prefix}/System/Library/Headers/%{libcombo}/AppKit
 %{_prefix}/System/Library/Headers/%{libcombo}/GNUstepGUI
