@@ -103,14 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog
 
-%lang(fr) %{_prefix}/System/Libraries/Resources/PrinterTypes/French.lproj
-%lang(de) %{_prefix}/System/Libraries/Resources/PrinterTypes/German.lproj
-%lang(it) %{_prefix}/System/Libraries/Resources/PrinterTypes/Italian.lproj
-%lang(es) %{_prefix}/System/Libraries/Resources/PrinterTypes/Spanish.lproj
-%lang(sv) %{_prefix}/System/Libraries/Resources/PrinterTypes/Swedish.lproj
-%lang(it) %{_prefix}/System/Libraries/Resources/gnustep-gui/Resources/Italian.lproj
-%lang(fr) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/French.lproj
-%lang(sv) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/Swedish.lproj
 %{_prefix}/System/Documentation/info/*.info*
 
 %{_prefix}/System/Libraries/Resources/English.lproj/*
@@ -120,48 +112,53 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Libraries/Resources/PrinterTypes/GSProlog.ps
 %{_prefix}/System/Libraries/Resources/PrinterTypes/Printers
 %{_prefix}/System/Libraries/Resources/PrinterTypes/English.lproj
+%lang(fr) %{_prefix}/System/Libraries/Resources/PrinterTypes/French.lproj
+%lang(de) %{_prefix}/System/Libraries/Resources/PrinterTypes/German.lproj
+%lang(it) %{_prefix}/System/Libraries/Resources/PrinterTypes/Italian.lproj
+%lang(es) %{_prefix}/System/Libraries/Resources/PrinterTypes/Spanish.lproj
+%lang(sv) %{_prefix}/System/Libraries/Resources/PrinterTypes/Swedish.lproj
 %dir %{_prefix}/System/Libraries/Resources/gnustep-gui
 %dir %{_prefix}/System/Libraries/Resources/gnustep-gui/Resources
 %{_prefix}/System/Libraries/Resources/gnustep-gui/Resources/English.lproj
+%lang(it) %{_prefix}/System/Libraries/Resources/gnustep-gui/Resources/Italian.lproj
 
 %{_prefix}/System/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so.*
 
-%{_prefix}/System/Library/Bundles
-#%dir %{_prefix}/System/Library/Bundles/TextConverters
-#%dir %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle
-#%{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/Resources
-#%attr(755,root,root) %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/%{gscpu}
-#%dir %{_prefix}/System/Library/Bundles/libgmodel.bundle
-#%{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
-#%attr (755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/%{gscpu}
-
-#%{_prefix}/System/Library/ColorPickers
+%dir %{_prefix}/System/Library/Bundles/TextConverters
+%dir %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle
+%{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/Resources
+%attr(755,root,root) %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/%{gscpu}
+%dir %{_prefix}/System/Library/Bundles/libgmodel.bundle
+%{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
+%attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/%{gscpu}
 %dir %{_prefix}/System/Library/ColorPickers
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources
 %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/*.tiff
 %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/*.plist
 %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/English.lproj
+%lang(fr) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/French.lproj
+%lang(sv) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/Swedish.lproj
 %attr(755,root,root) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/%{gscpu}
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/stamp.make
-%{_prefix}/System/Library/ColorPickers/WheelPicker.bundle
-#%{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
-#%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/%{gscpu}
+%dir %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle
+%{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
+%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/%{gscpu}
 
 %{_prefix}/System/Library/Model
 
-%{_prefix}/System/Library/Services
-#%{_prefix}/System/Library/Services/GSspell.service/Resources
-#%attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service
-#%dir %{_prefix}/System/Library/Services/example.service
-#%{_prefix}/System/Library/Services/example.service/Resources
-#%attr(755,root,root) %{_prefix}/System/Library/Services/example.service/%{gscpu}
+%dir %{_prefix}/System/Library/Services/GSspell.service
+%{_prefix}/System/Library/Services/GSspell.service/Resources
+%attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service/%{gscpu}
+%dir %{_prefix}/System/Library/Services/example.service
+%{_prefix}/System/Library/Services/example.service/Resources
+%attr(755,root,root) %{_prefix}/System/Library/Services/example.service/%{gscpu}
 
 %attr(755,root,root) %{_prefix}/System/Tools/%{gscpu}/%{gsos}/%{libcombo}/*
 
 %files devel
 %defattr(644,root,root,755)
-%{_prefix}/System/Headers
+%{_prefix}/System/Documentation/Developer/Gui
+%{_prefix}/System/Headers/AppKit
+%{_prefix}/System/Headers/gnustep/gui
 %{_prefix}/System/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so
 %{_prefix}/System/Makefiles/Additional/gui.make
-%{_prefix}/System/Documentation/Developer/Gui
