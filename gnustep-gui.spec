@@ -1,7 +1,7 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.6.0
+Version:	0.7.0
 Release:	1
 License:	GPL
 Vendor:		The Seawood Project
