@@ -1,93 +1,87 @@
-# This package is not relocatable
-%define ver	0.6.0
-%define date	19990918
-%define prefix 	/usr
-%define gsr 	%{prefix}/GNUstep
-%define libcombo gnu-gnu-gnu-xgps
-Name: 		gnustep-gui
-Version: 	%{ver}
-Release: 	1
-Source: 	ftp://ftp.gnustep.org/pub/gnustep/core/gstep-gui-%{ver}.tar.gz
-#Source: 	/cvs/gnustep-gui-%{ver}-%{date}.tar.gz
-Patch:          gstep-gui-headers.patch
-Copyright: 	GPL
-Group: 		Development/Tools
-Summary: 	GNUstep GUI library package
-Packager:	Christopher Seawood <cls@seawood.org>
-Distribution:	Seawood's Random RPMS (%{_buildsym})
+Summary:	GNUstep GUI library package
+Name:		gnustep-gui
+Version:	0.6.0
+Release:	1
+License:	GPL
 Vendor:		The Seawood Project
+Group:		Development/Tools
+Group(fr):	Development/Outils
+Group(pl):	Programowanie/Narzêdzia
+Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
+Source0:	/cvs/gnustep-gui-%{version}-%{date}.tar.gz
+Patch0:		gstep-gui-headers.patch
 URL:		http://www.gnustep.org/
-BuildRoot: 	/var/tmp/build-%{name}
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	gnustep-core
 Requires:	gnustep-base
 
 %description
-   It is a library of graphical user interface classes written
-completely in the Objective-C language; the classes are based upon the
-OpenStep specification as release by NeXT Software, Inc.  The library
-does not completely conform to the specification and has been enhanced
-in a number of ways to take advantage of the GNU system.  These classes
+It is a library of graphical user interface classes written completely
+in the Objective-C language; the classes are based upon the OpenStep
+specification as release by NeXT Software, Inc. The library does not
+completely conform to the specification and has been enhanced in a
+number of ways to take advantage of the GNU system. These classes
 include graphical objects such as buttons, text fields, popup lists,
 browser lists, and windows; there are also many associated classes for
 handling events, colors, fonts, pasteboards and images.
 
-Library combo is %{libcombo}.
-%{_buildblurb}
+Library combo is %{libcombo}. %{_buildblurb}
 
 %package devel
-Summary: GNUstep GUI headers and libs.
-Group: Development/Libraries
-Requires: %{name} = %{ver}, gnustep-base-devel
-Conflicts: gnustep-core
+Summary:	GNUstep GUI headers and libs.
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Requires:	%{name} = %{version}, gnustep-base-devel
+Conflicts:	gnustep-core
 
 %description devel
-Header files required to build applications against the GNUstep GUI library.
-Library combo is %{libcombo}.
-%{_buildblurb}
+Header files required to build applications against the GNUstep GUI
+library. Library combo is %{libcombo}. %{_buildblurb}
 
 %prep
 %setup -q -n gstep-%{ver}/gui
-%patch -p2 -b .headers
+%patch -p2
 
 %build
 if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
-   . %{gsr}/Makefiles/GNUstep.sh 
+   . %{_prefix}/GNUstep/Makefiles/GNUstep.sh 
 fi
-CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{gsr} --with-library-combo=%{libcombo}
+CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{_prefix}/GNUstep --with-library-combo=%{libcombo}
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
-   . %{gsr}/Makefiles/GNUstep.sh 
+   . %{_prefix}/GNUstep/Makefiles/GNUstep.sh 
 fi
-mkdir -p ${RPM_BUILD_ROOT}%{gsr}/Library/Services
+install -d ${RPM_BUILD_ROOT}%{_prefix}/GNUstep/Library/Services
 
-make install GNUSTEP_INSTALLATION_DIR=${RPM_BUILD_ROOT}%{gsr}
+make install GNUSTEP_INSTALLATION_DIR=${RPM_BUILD_ROOT}%{_prefix}/GNUstep
 
 cat > filelist.rpm.in << EOF
 %defattr (-, bin, bin)
 %doc ANNOUNCE COPYING* ChangeLog INSTALL NEWS NOTES README SUPPORT Version
 
-%dir %{gsr}/Library
+%dir %{_prefix}/GNUstep/Library
 
-%{gsr}/Libraries/GSARCH/GSOS/%{libcombo}/lib*.so.*
-%{gsr}/Libraries/Resources
-%{gsr}/Library/Model
-%{gsr}/Library/Services/*
-%{gsr}/Tools/make_services
-%{gsr}/Tools/set_show_service
+%{_prefix}/GNUstep/Libraries/GSARCH/GSOS/%{libcombo}/lib*.so.*
+%{_prefix}/GNUstep/Libraries/Resources
+%{_prefix}/GNUstep/Library/Model
+%{_prefix}/GNUstep/Library/Services/*
+%{_prefix}/GNUstep/Tools/make_services
+%{_prefix}/GNUstep/Tools/set_show_service
 # gpbs is now provided by xgps
-#%{gsr}/Tools/GSARCH/GSOS/%{libcombo}/gpbs
-%{gsr}/Tools/GSARCH/GSOS/%{libcombo}/make_services
-%{gsr}/Tools/GSARCH/GSOS/%{libcombo}/set_show_service
+#%{_prefix}/GNUstep/Tools/GSARCH/GSOS/%{libcombo}/gpbs
+%{_prefix}/GNUstep/Tools/GSARCH/GSOS/%{libcombo}/make_services
+%{_prefix}/GNUstep/Tools/GSARCH/GSOS/%{libcombo}/set_show_service
 
 EOF
 
 cat > filelist-devel.rpm.in  << EOF
 %defattr(-, bin, bin)
-%{gsr}/Headers/gnustep/gui
-%{gsr}/Libraries/GSARCH/GSOS/%{libcombo}/lib*.so
+%{_prefix}/GNUstep/Headers/gnustep/gui
+%{_prefix}/GNUstep/Libraries/GSARCH/GSOS/%{libcombo}/lib*.so
 
 EOF
 
@@ -96,18 +90,26 @@ sed -e "s|GSARCH|${GNUSTEP_HOST_CPU}|" -e "s|GSOS|${GNUSTEP_HOST_OS}|" < filelis
 
 # Don't worry about ld.so.conf on linux as gnustep-base should take care of it.
 
-%ifos Linux
-%post -p /sbin/ldconfig
+%post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files -f filelist.rpm
+%defattr(644,root,root,755)
+
 %files -f filelist-devel.rpm devel
+%defattr(644,root,root,755)
 
 %changelog
+* %{date} PLD Team <pld-list@pld.org.pl>
+All persons listed below can be reached at <cvs_login>@pld.org.pl
+
+$Log: gnustep-gui.spec,v $
+Revision 1.3  2000-05-20 13:37:50  kloczek
+- spec adapterized and partialy rewrited.
+
 * Sat Sep 18 1999 Christopher Seawood <cls@seawood.org>
 - Version 0.6.0
 - Added headers patch
