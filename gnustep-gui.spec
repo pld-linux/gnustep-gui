@@ -48,7 +48,7 @@ if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
    . %{_prefix}/GNUstep/Makefiles/GNUstep.sh 
 fi
 CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{_prefix}/GNUstep --with-library-combo=%{libcombo}
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -107,7 +107,10 @@ rm -rf $RPM_BUILD_ROOT
 All persons listed below can be reached at <cvs_login>@pld.org.pl
 
 $Log: gnustep-gui.spec,v $
-Revision 1.4  2000-06-09 07:22:52  kloczek
+Revision 1.5  2000-06-09 07:54:42  kloczek
+- more %%{__make} macros.
+
+Revision 1.4  2000/06/09 07:22:52  kloczek
 - added using %%{__make} macro.
 
 Revision 1.3  2000/05/20 13:37:50  kloczek
