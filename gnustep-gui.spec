@@ -5,10 +5,11 @@ Release:	1
 License:	GPL
 Vendor:		The Seawood Project
 Group:		Development/Tools
+Group(de):	Entwicklung/Werkzeuge
 Group(fr):	Development/Outils
 Group(pl):	Programowanie/Narzêdzia
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-Source0:	/cvs/gnustep-gui-%{version}-%{date}.tar.gz
+Source0:	/cvs/%{name}-%{version}-%{date}.tar.gz
 Patch0:		gstep-gui-headers.patch
 URL:		http://www.gnustep.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -30,6 +31,7 @@ Library combo is %{libcombo}. %{_buildblurb}
 %package devel
 Summary:	GNUstep GUI headers and libs.
 Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}, gnustep-base-devel
@@ -47,7 +49,7 @@ library. Library combo is %{libcombo}. %{_buildblurb}
 if [ -z "$GNUSTEP_SYSTEM_ROOT" ]; then
    . %{_prefix}/GNUstep/Makefiles/GNUstep.sh 
 fi
-CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{_prefix}/GNUstep --with-library-combo=%{libcombo}
+CFLAGS="%{rpmcflags}" ./configure --prefix=%{_prefix}/GNUstep --with-library-combo=%{libcombo}
 %{__make}
 
 %install
@@ -101,34 +103,3 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f filelist-devel.rpm devel
 %defattr(644,root,root,755)
-
-%changelog
-* %{date} PLD Team <pld-list@pld.org.pl>
-All persons listed below can be reached at <cvs_login>@pld.org.pl
-
-$Log: gnustep-gui.spec,v $
-Revision 1.6  2000-12-09 17:55:14  jajcus
-- file owners fixed (semi-automatically)
-  (no special user (like http/news) should own his home directory nor
-  files it doesn't create)
-
-Revision 1.5  2000/06/09 07:54:42  kloczek
-- more %%{__make} macros.
-
-Revision 1.4  2000/06/09 07:22:52  kloczek
-- added using %%{__make} macro.
-
-Revision 1.3  2000/05/20 13:37:50  kloczek
-- spec adapterized and partialy rewrited.
-
-* Sat Sep 18 1999 Christopher Seawood <cls@seawood.org>
-- Version 0.6.0
-- Added headers patch
-
-* Sat Aug 07 1999 Christopher Seawood <cls@seawood.org>
-- Updated to cvs dawn_6 branch
-
-* Sat Jun 26 1999 Christopher Seawood <cls@seawood.org>
-- Split into separate rpm from gnustep-core
-- Build from cvs snapshot
-- Split into -devel, -libs & -zoneinfo packages
