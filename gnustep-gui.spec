@@ -2,7 +2,7 @@ Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.9.3
-Release:	1
+Release:	2
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
@@ -137,11 +137,12 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/French.lproj
 %lang(sv) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/Swedish.lproj
 %attr(755,root,root) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/%{gscpu}
+%dir %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle
+%{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
+%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/%{gscpu}
 %dir %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle
 %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/%{gscpu}
-%{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/%{gscpu}
 
 %{_prefix}/System/Library/Images/*
 %{_prefix}/System/Library/KeyBindings/*.dict
