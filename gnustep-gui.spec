@@ -8,10 +8,9 @@ Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
 # Source0-md5:	399b3a2341899d12710f4d1ed36f3002
 Patch0:		%{name}-themes.patch
-Patch2:		%{name}-nocompressdocs.patch
-Patch3:		%{name}-segv.patch
-#Patch4:		%{name}-include.patch
-Patch5:		%{name}-doc.patch
+Patch1:		%{name}-nocompressdocs.patch
+Patch2:		%{name}-segv.patch
+Patch3:		%{name}-doc.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
@@ -75,10 +74,9 @@ biblioteki GNUstep GUI.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
-%patch5 -p1
 
 %build
 . %{_prefix}/System/Library/Makefiles/GNUstep.sh
@@ -177,7 +175,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/Documentation/Developer/Gui/General
 %{_prefix}/System/Library/Documentation/Developer/Gui/ProgrammingManual
 %{_prefix}/System/Library/Documentation/Developer/Gui/Reference
-%{_prefix}/System/Library/Documentation/Developer/Gui/ReleaseNotes
 %{_prefix}/System/Library/Documentation/info/gnustep-gui.info*
 
 %{_prefix}/System/Library/Headers/%{libcombo}/AppKit
