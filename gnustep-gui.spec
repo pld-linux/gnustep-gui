@@ -79,7 +79,7 @@ cat > filelist.rpm.in << EOF
 EOF
 
 cat > filelist-devel.rpm.in  << EOF
-%defattr(-, bin, bin)
+%defattr(-, root, root)
 %{_prefix}/GNUstep/Headers/gnustep/gui
 %{_prefix}/GNUstep/Libraries/GSARCH/GSOS/%{libcombo}/lib*.so
 
@@ -107,7 +107,12 @@ rm -rf $RPM_BUILD_ROOT
 All persons listed below can be reached at <cvs_login>@pld.org.pl
 
 $Log: gnustep-gui.spec,v $
-Revision 1.5  2000-06-09 07:54:42  kloczek
+Revision 1.6  2000-12-09 17:55:14  jajcus
+- file owners fixed (semi-automatically)
+  (no special user (like http/news) should own his home directory nor
+  files it doesn't create)
+
+Revision 1.5  2000/06/09 07:54:42  kloczek
 - more %%{__make} macros.
 
 Revision 1.4  2000/06/09 07:22:52  kloczek
