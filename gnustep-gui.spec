@@ -2,7 +2,7 @@ Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.9.4
-Release:	2
+Release:	3
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
@@ -102,7 +102,7 @@ find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
 find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
 	-type f -a ! -name '*.html' | xargs gzip -9nf
 
-mv $RPM_BUILD_ROOT/usr/lib/GNUstep/System/Library/Documentation/info/manual.info.gz $RPM_BUILD_ROOT/usr/lib/GNUstep/System/Library/Documentation/info/gnustep-gui.info.gz
+mv $RPM_BUILD_ROOT/%{_prefix}/System/Library/Documentation/info/manual.info.gz $RPM_BUILD_ROOT/%{_prefix}/System/Library/Documentation/info/gnustep-gui.info.gz
 
 %clean
 rm -rf $RPM_BUILD_ROOT
