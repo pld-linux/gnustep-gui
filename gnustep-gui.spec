@@ -15,11 +15,11 @@ Patch5:		%{name}-doc.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.9.0
+BuildRequires:	gnustep-base-devel >= 1.10.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.9.0
+Requires:	gnustep-base >= 1.10.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
