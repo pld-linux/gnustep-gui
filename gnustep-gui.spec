@@ -2,7 +2,7 @@ Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.9.4
-Release:	4
+Release:	5
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
@@ -12,6 +12,7 @@ Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
 Patch3:		%{name}-doc.patch
 URL:		http://www.gnustep.org/
+BuildRequires:	aspell-devel
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
 BuildRequires:	gnustep-base-devel >= 1.10.0
@@ -128,10 +129,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
 %attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/%{gscpu}
 
+%dir %{_prefix}/System/Library/Bundles/GSPrinting
 %dir %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle
 %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/Resources
 %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/%{gscpu}
-
 
 %dir %{_prefix}/System/Library/ColorPickers
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle
