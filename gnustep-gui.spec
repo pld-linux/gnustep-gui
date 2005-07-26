@@ -1,12 +1,12 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.9.5
+Version:	0.10.0
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	59c151b1edc2e8e9c1e5aff70569783e
+# Source0-md5:	1f35061e045fe7915bfa80ff037dee3a
 Patch0:		%{name}-themes.patch
 Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
@@ -15,11 +15,11 @@ URL:		http://www.gnustep.org/
 BuildRequires:	aspell-devel
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.10.0
+BuildRequires:	gnustep-base-devel >= 1.11.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.10.0
+Requires:	gnustep-base >= 1.11.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -59,7 +59,7 @@ Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	audiofile-devel
-Requires:	gnustep-base-devel >= 1.9.0
+Requires:	gnustep-base-devel >= 1.11.0
 Requires:	libjpeg-devel
 Requires:	libtiff-devel
 Conflicts:	gnustep-core
@@ -81,7 +81,9 @@ biblioteki GNUstep GUI.
 
 %build
 . %{_prefix}/System/Library/Makefiles/GNUstep.sh
-%configure
+# disable gsnd - not ready for current portaudio
+%configure \
+	--disable-gsnd
 
 %{__make} \
 	messages=yes
