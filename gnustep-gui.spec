@@ -1,12 +1,12 @@
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.10.1
+Version:	0.10.2
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	af5710e88c7592211409211417fb02b8
+# Source0-md5:	0b8689f4d5178102740cc31fd97560bc
 Patch0:		%{name}-themes.patch
 Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
@@ -15,11 +15,11 @@ URL:		http://www.gnustep.org/
 BuildRequires:	aspell-devel
 BuildRequires:	audiofile-devel
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.11.0
+BuildRequires:	gnustep-base-devel >= 1.11.2
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.11.0
+Requires:	gnustep-base >= 1.11.2
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -59,7 +59,7 @@ Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	audiofile-devel
-Requires:	gnustep-base-devel >= 1.11.0
+Requires:	gnustep-base-devel >= 1.11.2
 Requires:	libjpeg-devel
 Requires:	libtiff-devel
 Conflicts:	gnustep-core
@@ -80,7 +80,8 @@ biblioteki GNUstep GUI.
 %patch3 -p1
 
 %build
-. %{_prefix}/System/Library/Makefiles/GNUstep.sh
+export GNUSTEP_MAKEFILES=%{_prefix}/System/Library/Makefiles
+export GNUSTEP_TARGET_DIR=%{gscpu}/linux-gnu
 # disable gsnd - not ready for current portaudio
 %configure \
 	--disable-gsnd
@@ -90,7 +91,8 @@ biblioteki GNUstep GUI.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-. %{_prefix}/System/Library/Makefiles/GNUstep.sh
+export GNUSTEP_MAKEFILES=%{_prefix}/System/Library/Makefiles
+export GNUSTEP_TARGET_DIR=%{gscpu}/linux-gnu
 
 %{__make} install \
 	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
