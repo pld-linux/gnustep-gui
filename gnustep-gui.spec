@@ -1,12 +1,17 @@
+#
+# Conditional build:
+%bcond_without	cups		# GSCUPS bundle
+%bcond_without	portaudio	# gsnd tool
+#
 Summary:	GNUstep GUI library package
 Summary(pl):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.10.2
+Version:	0.11.0
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	0b8689f4d5178102740cc31fd97560bc
+# Source0-md5:	7821a516ce5f683885116d78ac09b79e
 Patch0:		%{name}-themes.patch
 Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
@@ -14,25 +19,20 @@ Patch3:		%{name}-doc.patch
 URL:		http://www.gnustep.org/
 BuildRequires:	aspell-devel
 BuildRequires:	audiofile-devel
+%{?with_cups:BuildRequires:	cups-devel}
 BuildRequires:	gcc-objc
-BuildRequires:	gnustep-base-devel >= 1.11.2
+BuildRequires:	giflib-devel
+BuildRequires:	gnustep-base-devel >= 1.13.0
 BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
+%{?with_portaudio:BuildRequires:	portaudio-devel >= 19}
 BuildRequires:	zlib-devel
-Requires:	gnustep-base >= 1.11.2
+Requires:	gnustep-base >= 1.13.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _prefix         /usr/%{_lib}/GNUstep
-
-%define		libcombo	gnu-gnu-gnu
-%define		gsos		linux-gnu
-%ifarch %{ix86}
-%define		gscpu		ix86
-%else
-# also s/alpha.*/alpha/, but we use only "alpha" arch for now
-%define		gscpu		%(echo %{_target_cpu} | sed -e 's/amd64/x86_64/;s/ppc/powerpc/')
-%endif
 
 %description
 It is a library of graphical user interface classes written completely
@@ -59,7 +59,7 @@ Summary(pl):	Pliki nag³ówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	audiofile-devel
-Requires:	gnustep-base-devel >= 1.11.2
+Requires:	gnustep-base-devel >= 1.13.0
 Requires:	libjpeg-devel
 Requires:	libtiff-devel
 Conflicts:	gnustep-core
@@ -81,10 +81,11 @@ biblioteki GNUstep GUI.
 
 %build
 export GNUSTEP_MAKEFILES=%{_prefix}/System/Library/Makefiles
-export GNUSTEP_TARGET_DIR=%{gscpu}/linux-gnu
+export GNUSTEP_FLATTENED=yes
 # disable gsnd - not ready for current portaudio
 %configure \
-	--disable-gsnd
+	%{!?with_cups:--disable-cups} \
+	%{!?with_portaudio:--disable-gsnd}
 
 %{__make} \
 	messages=yes
@@ -92,7 +93,7 @@ export GNUSTEP_TARGET_DIR=%{gscpu}/linux-gnu
 %install
 rm -rf $RPM_BUILD_ROOT
 export GNUSTEP_MAKEFILES=%{_prefix}/System/Library/Makefiles
-export GNUSTEP_TARGET_DIR=%{gscpu}/linux-gnu
+export GNUSTEP_FLATTENED=yes
 
 %{__make} install \
 	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
@@ -125,20 +126,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/Documentation/User/Gui
 %{_prefix}/System/Library/Documentation/man/man1/*
 
+%dir %{_prefix}/System/Library/Bundles/GSPrinting
+%if %{with cups}
+# R: cups-lib - separate?
+%dir %{_prefix}/System/Library/Bundles/GSPrinting/GSCUPS.bundle
+%{_prefix}/System/Library/Bundles/GSPrinting/GSCUPS.bundle/Resources
+%{_prefix}/System/Library/Bundles/GSPrinting/GSCUPS.bundle/GSCUPS
+%endif
+%dir %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle
+%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/Resources
+%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/GSLPR
+
 %dir %{_prefix}/System/Library/Bundles/TextConverters
 %dir %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle
 %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/%{gscpu}
+%attr(755,root,root) %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/RTFConverter
 %dir %{_prefix}/System/Library/Bundles/libgmodel.bundle
 %{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/%{gscpu}
-
-%dir %{_prefix}/System/Library/Bundles/GSPrinting
-%dir %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle
-%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/Resources
-%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/%{gscpu}
+%attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/libgmodel
 
 %dir %{_prefix}/System/Library/ColorPickers
+%dir %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle
+%{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
+%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/NamedPicker
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle
 %dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources
 %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/*.tiff
@@ -146,13 +156,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/English.lproj
 %lang(fr) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/French.lproj
 %lang(sv) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/Swedish.lproj
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/%{gscpu}
-%dir %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle
-%{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/%{gscpu}
+%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/StandardPicker
 %dir %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle
 %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/%{gscpu}
+%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/WheelPicker
 
 %{_prefix}/System/Library/Images/*
 %{_prefix}/System/Library/KeyBindings/*.dict
@@ -160,9 +167,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/System/Library/Libraries/Resources/gnustep-gui
 %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/*.plist
 %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/English.lproj
+%lang(eo) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Esperanto.lproj
+%lang(de) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/German.lproj
 %lang(it) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Italian.lproj
+%lang(jbo) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Lojban.lproj
 
-%{_prefix}/System/Library/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so.*
+%attr(755,root,root) %{_prefix}/System/Library/Libraries/libgnustep-gui.so.*
 
 %dir %{_prefix}/System/Library/PostScript
 %{_prefix}/System/Library/PostScript/GSProlog.ps
@@ -170,9 +180,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/PostScript/PPD/English.lproj
 %dir %{_prefix}/System/Library/Services/GSspell.service
 %{_prefix}/System/Library/Services/GSspell.service/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service/%{gscpu}
+%attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service/GSspell
 
-%attr(755,root,root) %{_prefix}/System/Tools/%{gscpu}/%{gsos}/%{libcombo}/*
+%attr(755,root,root) %{_prefix}/System/Tools/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -183,9 +193,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/System/Library/Documentation/Developer/Gui/Reference
 %{_prefix}/System/Library/Documentation/info/gnustep-gui.info*
 
-%{_prefix}/System/Library/Headers/%{libcombo}/AppKit
-%{_prefix}/System/Library/Headers/%{libcombo}/GNUstepGUI
-%{_prefix}/System/Library/Headers/%{libcombo}/gnustep/gui
+%{_prefix}/System/Library/Headers/AppKit
+%{_prefix}/System/Library/Headers/Cocoa
+%{_prefix}/System/Library/Headers/GNUstepGUI
+%{_prefix}/System/Library/Headers/gnustep/gui
 
-%{_prefix}/System/Library/Libraries/%{gscpu}/%{gsos}/%{libcombo}/lib*.so
+%attr(755,root,root) %{_prefix}/System/Library/Libraries/libgnustep-gui.so
 %{_prefix}/System/Library/Makefiles/Additional/gui.make
