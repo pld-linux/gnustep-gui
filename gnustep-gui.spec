@@ -4,7 +4,7 @@
 %bcond_without	portaudio	# gsnd tool
 #
 Summary:	GNUstep GUI library package
-Summary(pl):	Biblioteka GNUstep GUI
+Summary(pl.UTF-8):   Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.11.0
 Release:	1
@@ -44,18 +44,18 @@ include graphical objects such as buttons, text fields, popup lists,
 browser lists, and windows; there are also many associated classes for
 handling events, colors, fonts, pasteboards and images.
 
-%description -l pl
-To jest biblioteka klas graficznego interfejsu uøytkownika napisana w
-Objective-C. Klasy bazuj± na specyfikacji OpenStep wypuszczonej przez
-NeXT Software. Biblioteka nie jest ca≥kowicie zgodna ze specyfikacj± i
-zosta≥a rozszerzona, aby wykorzystaÊ moøliwo∂ci systemu GNU. Klasy
-zawieraj± graficzne obiekty takie jak przyciski, pola tekstowe, listy
-rozwijane, listy przewijane i okienka; jest takøe wiele klas do
-obs≥ugi zdarzeÒ, kolorÛw, fontÛw i obrazkÛw.
+%description -l pl.UTF-8
+To jest biblioteka klas graficznego interfejsu u≈ºytkownika napisana w
+Objective-C. Klasy bazujƒÖ na specyfikacji OpenStep wypuszczonej przez
+NeXT Software. Biblioteka nie jest ca≈Çkowicie zgodna ze specyfikacjƒÖ i
+zosta≈Ça rozszerzona, aby wykorzystaƒá mo≈ºliwo≈õci systemu GNU. Klasy
+zawierajƒÖ graficzne obiekty takie jak przyciski, pola tekstowe, listy
+rozwijane, listy przewijane i okienka; jest tak≈ºe wiele klas do
+obs≈Çugi zdarze≈Ñ, kolor√≥w, font√≥w i obrazk√≥w.
 
 %package devel
 Summary:	GNUstep GUI headers and libs
-Summary(pl):	Pliki nag≥Ûwkowe GNUstep GUI
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	audiofile-devel
@@ -68,8 +68,8 @@ Conflicts:	gnustep-core
 Header files required to build applications against the GNUstep GUI
 library.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe potrzebne do budowania aplikacji korzystaj±cych z
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe potrzebne do budowania aplikacji korzystajƒÖcych z
 biblioteki GNUstep GUI.
 
 %prep
