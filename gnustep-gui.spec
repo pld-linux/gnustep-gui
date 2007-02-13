@@ -4,7 +4,7 @@
 %bcond_without	portaudio	# gsnd tool
 #
 Summary:	GNUstep GUI library package
-Summary(pl.UTF-8):   Biblioteka GNUstep GUI
+Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 Version:	0.11.0
 Release:	1
@@ -55,7 +55,7 @@ obsługi zdarzeń, kolorów, fontów i obrazków.
 
 %package devel
 Summary:	GNUstep GUI headers and libs
-Summary(pl.UTF-8):   Pliki nagłówkowe GNUstep GUI
+Summary(pl.UTF-8):	Pliki nagłówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	audiofile-devel
