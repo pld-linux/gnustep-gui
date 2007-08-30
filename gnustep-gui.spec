@@ -6,12 +6,13 @@
 Summary:	GNUstep GUI library package
 Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-Version:	0.11.0
+%define	ver	0.12
+Version:	%{ver}.0
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	7821a516ce5f683885116d78ac09b79e
+# Source0-md5:	13f1ec9910a99105ed0f1f79f2ff2db0
 Patch0:		%{name}-themes.patch
 Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
@@ -31,8 +32,6 @@ BuildRequires:	zlib-devel
 Requires:	gnustep-base >= 1.13.0
 Conflicts:	gnustep-core
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define         _prefix         /usr/%{_lib}/GNUstep
 
 %description
 It is a library of graphical user interface classes written completely
@@ -80,7 +79,7 @@ biblioteki GNUstep GUI.
 %patch3 -p1
 
 %build
-export GNUSTEP_MAKEFILES=%{_prefix}/System/Library/Makefiles
+export GNUSTEP_MAKEFILES=%{_datadir}/GNUstep/Makefiles
 export GNUSTEP_FLATTENED=yes
 # disable gsnd - not ready for current portaudio
 %configure \
@@ -92,23 +91,21 @@ export GNUSTEP_FLATTENED=yes
 
 %install
 rm -rf $RPM_BUILD_ROOT
-export GNUSTEP_MAKEFILES=%{_prefix}/System/Library/Makefiles
+export GNUSTEP_MAKEFILES=%{_datadir}/GNUstep/Makefiles
 export GNUSTEP_FLATTENED=yes
 
 %{__make} install \
-	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
-	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT
+
 %{__make} install -C Documentation \
-	GNUSTEP_INSTALLATION_DIR=$RPM_BUILD_ROOT%{_prefix}/System \
-	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT
 
-find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
+find $RPM_BUILD_ROOT%{_datadir}/GNUstep/Documentation \
 	-type f -name .cvsignore | xargs rm -f
-# not (yet?) supported by rpm-compress-doc
-find $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation \
-	-type f -a ! -name '*.html' | xargs gzip -9nf
 
-mv $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation/info/manual.info.gz $RPM_BUILD_ROOT%{_prefix}/System/Library/Documentation/info/gnustep-gui.info.gz
+# not (yet?) supported by rpm-compress-doc
+find $RPM_BUILD_ROOT%{_datadir}/GNUstep/Documentation \
+	-type f -a ! -name '*.html' -a ! -name '*.gz' -a ! -name '*.jpg' -a ! -name '*.css' | xargs gzip -9nf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -119,84 +116,87 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog
+%docdir %{_datadir}/GNUstep/Documentation
+%dir %{_datadir}/GNUstep/Documentation/Developer
+%dir %{_datadir}/GNUstep/Documentation/Developer/Gui
+%{_datadir}/GNUstep/Documentation/Developer/Gui/ReleaseNotes
+%{_datadir}/GNUstep/Documentation/User
 
-%docdir %{_prefix}/System/Library/Documentation
-%dir %{_prefix}/System/Library/Documentation/Developer/Gui
-%{_prefix}/System/Library/Documentation/Developer/Gui/ReleaseNotes
-%{_prefix}/System/Library/Documentation/User/Gui
-%{_prefix}/System/Library/Documentation/man/man1/*
+%{_mandir}/man1/*
 
-%dir %{_prefix}/System/Library/Bundles/GSPrinting
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/libgnustep-gui.so.*
+
+%dir %{_libdir}/GNUstep/Bundles/GSPrinting
+%dir %{_libdir}/GNUstep/Bundles/GSPrinting/GSLPR.bundle
+%{_libdir}/GNUstep/Bundles/GSPrinting/GSLPR.bundle/Resources
+%{_libdir}/GNUstep/Bundles/GSPrinting/GSLPR.bundle/GSLPR
 %if %{with cups}
 # R: cups-lib - separate?
-%dir %{_prefix}/System/Library/Bundles/GSPrinting/GSCUPS.bundle
-%{_prefix}/System/Library/Bundles/GSPrinting/GSCUPS.bundle/Resources
-%{_prefix}/System/Library/Bundles/GSPrinting/GSCUPS.bundle/GSCUPS
+%dir %{_libdir}/GNUstep/Bundles/GSPrinting/GSCUPS.bundle
+%{_libdir}/GNUstep/Bundles/GSPrinting/GSCUPS.bundle/Resources
+%{_libdir}/GNUstep/Bundles/GSPrinting/GSCUPS.bundle/GSCUPS
 %endif
-%dir %{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle
-%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/Resources
-%{_prefix}/System/Library/Bundles/GSPrinting/GSLPR.bundle/GSLPR
 
-%dir %{_prefix}/System/Library/Bundles/TextConverters
-%dir %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle
-%{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Bundles/TextConverters/RTFConverter.bundle/RTFConverter
-%dir %{_prefix}/System/Library/Bundles/libgmodel.bundle
-%{_prefix}/System/Library/Bundles/libgmodel.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Bundles/libgmodel.bundle/libgmodel
+%dir %{_libdir}/GNUstep/Bundles/TextConverters
+%dir %{_libdir}/GNUstep/Bundles/TextConverters/RTFConverter.bundle
+%{_libdir}/GNUstep/Bundles/TextConverters/RTFConverter.bundle/Resources
+%attr(755,root,root) %{_libdir}/GNUstep/Bundles/TextConverters/RTFConverter.bundle/RTFConverter
+%dir %{_libdir}/GNUstep/Bundles/libgmodel.bundle
+%{_libdir}/GNUstep/Bundles/libgmodel.bundle/Resources
+%attr(755,root,root) %{_libdir}/GNUstep/Bundles/libgmodel.bundle/libgmodel
 
-%dir %{_prefix}/System/Library/ColorPickers
-%dir %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle
-%{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/NamedPicker.bundle/NamedPicker
-%dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle
-%dir %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources
-%{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/*.tiff
-%{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/*.plist
-%{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/English.lproj
-%lang(fr) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/French.lproj
-%lang(sv) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/Resources/Swedish.lproj
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/StandardPicker.bundle/StandardPicker
-%dir %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle
-%{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/Resources
-%attr(755,root,root) %{_prefix}/System/Library/ColorPickers/WheelPicker.bundle/WheelPicker
+%dir %{_libdir}/GNUstep/ColorPickers
+%dir %{_libdir}/GNUstep/ColorPickers/NamedPicker.bundle
+%{_libdir}/GNUstep/ColorPickers/NamedPicker.bundle/Resources
+%attr(755,root,root) %{_libdir}/GNUstep/ColorPickers/NamedPicker.bundle/NamedPicker
+%dir %{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle
+%dir %{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/Resources
+%{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/Resources/*.tiff
+%{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/Resources/*.plist
+%{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/Resources/English.lproj
+%lang(fr) %{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/Resources/French.lproj
+%lang(sv) %{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/Resources/Swedish.lproj
+%attr(755,root,root) %{_libdir}/GNUstep/ColorPickers/StandardPicker.bundle/StandardPicker
+%dir %{_libdir}/GNUstep/ColorPickers/WheelPicker.bundle
+%{_libdir}/GNUstep/ColorPickers/WheelPicker.bundle/Resources
+%attr(755,root,root) %{_libdir}/GNUstep/ColorPickers/WheelPicker.bundle/WheelPicker
 
-%{_prefix}/System/Library/Images/*
-%{_prefix}/System/Library/KeyBindings/*.dict
+%{_libdir}/GNUstep/Images/*
+%{_libdir}/GNUstep/KeyBindings/*.dict
 
-%dir %{_prefix}/System/Library/Libraries/Resources/gnustep-gui
-%{_prefix}/System/Library/Libraries/Resources/gnustep-gui/*.plist
-%{_prefix}/System/Library/Libraries/Resources/gnustep-gui/English.lproj
-%lang(eo) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Esperanto.lproj
-%lang(de) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/German.lproj
-%lang(it) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Italian.lproj
-%lang(jbo) %{_prefix}/System/Library/Libraries/Resources/gnustep-gui/Lojban.lproj
+%dir %{_libdir}/GNUstep/Libraries/gnustep-gui
+%dir %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions
+%dir %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}
+%dir %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources
+%{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources/*.plist
+%{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources/English.lproj
+%lang(eo) %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources/Esperanto.lproj
+%lang(de) %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources/German.lproj
+%lang(it) %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources/Italian.lproj
+%lang(jbo) %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions/%{ver}/Resources/Lojban.lproj
 
-%attr(755,root,root) %{_prefix}/System/Library/Libraries/libgnustep-gui.so.*
-
-%dir %{_prefix}/System/Library/PostScript
-%{_prefix}/System/Library/PostScript/GSProlog.ps
-%dir %{_prefix}/System/Library/PostScript/PPD
-%{_prefix}/System/Library/PostScript/PPD/English.lproj
-%dir %{_prefix}/System/Library/Services/GSspell.service
-%{_prefix}/System/Library/Services/GSspell.service/Resources
-%attr(755,root,root) %{_prefix}/System/Library/Services/GSspell.service/GSspell
-
-%attr(755,root,root) %{_prefix}/System/Tools/*
+%dir %{_libdir}/GNUstep/PostScript
+%{_libdir}/GNUstep/PostScript/GSProlog.ps
+%dir %{_libdir}/GNUstep/PostScript/PPD
+%{_libdir}/GNUstep/PostScript/PPD/English.lproj
+%dir %{_libdir}/GNUstep/Services/GSspell.service
+%{_libdir}/GNUstep/Services/GSspell.service/Resources
+%attr(755,root,root) %{_libdir}/GNUstep/Services/GSspell.service/GSspell
 
 %files devel
 %defattr(644,root,root,755)
-%docdir %{_prefix}/System/Library/Documentation
-%{_prefix}/System/Library/Documentation/Developer/Gui/Additions
-%{_prefix}/System/Library/Documentation/Developer/Gui/General
-%{_prefix}/System/Library/Documentation/Developer/Gui/ProgrammingManual
-%{_prefix}/System/Library/Documentation/Developer/Gui/Reference
-%{_prefix}/System/Library/Documentation/info/gnustep-gui.info*
+%docdir %{_datadir}/GNUstep/Documentation
+%{_datadir}/GNUstep/Documentation/Developer/Gui/Additions
+%{_datadir}/GNUstep/Documentation/Developer/Gui/General
+%{_datadir}/GNUstep/Documentation/Developer/Gui/ProgrammingManual
+%{_datadir}/GNUstep/Documentation/Developer/Gui/Reference
+%{_infodir}/*.info*
 
-%{_prefix}/System/Library/Headers/AppKit
-%{_prefix}/System/Library/Headers/Cocoa
-%{_prefix}/System/Library/Headers/GNUstepGUI
-%{_prefix}/System/Library/Headers/gnustep/gui
+%{_includedir}/AppKit
+%{_includedir}/Cocoa
+%{_includedir}/GNUstepGUI
+%{_includedir}/gnustep/gui
 
-%attr(755,root,root) %{_prefix}/System/Library/Libraries/libgnustep-gui.so
-%{_prefix}/System/Library/Makefiles/Additional/gui.make
+%attr(755,root,root) %{_libdir}/libgnustep-gui.so
+%{_datadir}/GNUstep/Makefiles/Additional/gui.make
