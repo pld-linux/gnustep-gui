@@ -8,7 +8,7 @@ Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 %define	ver	0.12
 Version:	%{ver}.0
-Release:	1
+Release:	2
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
@@ -127,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/libgnustep-gui.so.*
 
+%dir %{_libdir}/GNUstep/Bundles
 %dir %{_libdir}/GNUstep/Bundles/GSPrinting
 %dir %{_libdir}/GNUstep/Bundles/GSPrinting/GSLPR.bundle
 %{_libdir}/GNUstep/Bundles/GSPrinting/GSLPR.bundle/Resources
@@ -162,8 +163,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/GNUstep/ColorPickers/WheelPicker.bundle/Resources
 %attr(755,root,root) %{_libdir}/GNUstep/ColorPickers/WheelPicker.bundle/WheelPicker
 
-%{_libdir}/GNUstep/Images/*
-%{_libdir}/GNUstep/KeyBindings/*.dict
+%{_libdir}/GNUstep/Images
+%{_libdir}/GNUstep/KeyBindings
 
 %dir %{_libdir}/GNUstep/Libraries/gnustep-gui
 %dir %{_libdir}/GNUstep/Libraries/gnustep-gui/Versions
@@ -180,6 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/GNUstep/PostScript/GSProlog.ps
 %dir %{_libdir}/GNUstep/PostScript/PPD
 %{_libdir}/GNUstep/PostScript/PPD/English.lproj
+%dir %{_libdir}/GNUstep/Services
 %dir %{_libdir}/GNUstep/Services/GSspell.service
 %{_libdir}/GNUstep/Services/GSspell.service/Resources
 %attr(755,root,root) %{_libdir}/GNUstep/Services/GSspell.service/GSspell
