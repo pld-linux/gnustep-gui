@@ -6,13 +6,13 @@
 Summary:	GNUstep GUI library package
 Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-%define	ver	0.12
+%define	ver	0.13
 Version:	%{ver}.0
-Release:	2
+Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	13f1ec9910a99105ed0f1f79f2ff2db0
+# Source0-md5:	9f9e35390dac3e043f3f44952c38c412
 Patch0:		%{name}-themes.patch
 Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
