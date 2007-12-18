@@ -86,7 +86,8 @@ export GNUSTEP_FLATTENED=yes
 	%{!?with_cups:--disable-cups} \
 	%{!?with_portaudio:--disable-gsnd}
 
-%{__make} \
+# with __make -jN we can got non-deterministic errors
+%{__make} -j1 \
 	messages=yes
 
 %install
