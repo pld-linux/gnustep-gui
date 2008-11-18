@@ -1,13 +1,11 @@
-diff -ur gnustep-gui-0.8.9-orig/Documentation/GNUmakefile.postamble gnustep-gui-0.8.9/Documentation/GNUmakefile.postamble
---- gnustep-gui-0.8.9-orig/Documentation/GNUmakefile.postamble	2003-08-12 21:50:42.000000000 -0600
-+++ gnustep-gui-0.8.9/Documentation/GNUmakefile.postamble	2003-09-02 16:05:50.000000000 -0600
-@@ -61,8 +61,6 @@
+--- gnustep-gui-0.14.0/Documentation/GNUmakefile.postamble.orig	2008-11-18 04:26:22.548319447 +0100
++++ gnustep-gui-0.14.0/Documentation/GNUmakefile.postamble	2008-11-18 04:26:46.046704456 +0100
+@@ -60,8 +60,6 @@
  	for file in $(MAN1_PAGES) __done; do \
  	  if [ $$file != __done ]; then \
- 	    $(INSTALL_DATA) $$file $(GNUSTEP_DOCUMENTATION_MAN)/man1/$$file; \
--	    which gzip && rm -f $(GNUSTEP_DOCUMENTATION_MAN)/man1/$$file.gz \
--		&& gzip -9 $(GNUSTEP_DOCUMENTATION_MAN)/man1/$$file; \
+ 	    $(INSTALL_DATA) $$file $(GNUSTEP_DOC_MAN)/man1/$$file; \
+-	    which gzip && rm -f $(GNUSTEP_DOC_MAN)/man1/$$file.gz \
+-		&& gzip -9 $(GNUSTEP_DOC_MAN)/man1/$$file; \
  	  fi; \
- 	done; \
+ 	done;
  
-Only in gnustep-gui-0.8.9/Documentation: GNUmakefile.postamble~
