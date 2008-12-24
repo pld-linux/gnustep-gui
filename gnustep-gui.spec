@@ -6,13 +6,13 @@
 Summary:	GNUstep GUI library package
 Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-%define	ver	0.14
+%define	ver	0.16
 Version:	%{ver}.0
 Release:	1
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	c2b65eb22bba4db053c17b20f12dfb4a
+# Source0-md5:	464b80094e438fe0cc8e6ae691b3384c
 Patch0:		%{name}-themes.patch
 Patch1:		%{name}-nocompressdocs.patch
 Patch2:		%{name}-segv.patch
@@ -93,6 +93,7 @@ export GNUSTEP_FLATTENED=yes
 %install
 rm -rf $RPM_BUILD_ROOT
 export GNUSTEP_MAKEFILES=%{_datadir}/GNUstep/Makefiles
+export GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 export GNUSTEP_FLATTENED=yes
 
 %{__make} install \
