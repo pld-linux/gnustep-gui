@@ -8,7 +8,7 @@ Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 %define	ver	0.16
 Version:	%{ver}.0
-Release:	2
+Release:	3
 License:	LGPL/GPL
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
