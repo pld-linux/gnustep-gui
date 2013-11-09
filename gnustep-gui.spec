@@ -147,7 +147,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgnustep-gui.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgnustep-gui.so.%{ver}
 
+# XXX: shared with WindowMaker - move to gnustep-dirs?
 %dir %{_libdir}/GNUstep/Applications
+
 %dir %{_libdir}/GNUstep/Applications/GSSpeechServer.app
 %attr(755,root,root) %{_libdir}/GNUstep/Applications/GSSpeechServer.app/GSSpeechServer
 %{_libdir}/GNUstep/Applications/GSSpeechServer.app/Resources
