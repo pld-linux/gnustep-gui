@@ -7,19 +7,19 @@
 Summary:	GNUstep GUI library package
 Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
-%define	ver	0.23
-Version:	%{ver}.1
+%define	ver	0.24
+Version:	%{ver}.0
 Release:	1
 License:	LGPL v2+ (library), GPL v3+ (applications)
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
-# Source0-md5:	1771bdb42f27ee946b17bf60fef5eb2e
+# Source0-md5:	bd289f0c7b2626d093ad92364069b9a7
 Patch0:		%{name}-nocompressdocs.patch
 Patch1:		%{name}-doc.patch
+Patch2:		%{name}-giflib.patch
 URL:		http://www.gnustep.org/
 %{?with_magick:BuildRequires:	ImageMagick-devel}
 BuildRequires:	aspell-devel
-BuildRequires:	audiofile-devel
 %{?with_cups:BuildRequires:	cups-devel}
 BuildRequires:	flite-devel
 BuildRequires:	gcc-objc
@@ -27,6 +27,7 @@ BuildRequires:	giflib-devel
 BuildRequires:	gnustep-base-devel >= 1.13.0
 BuildRequires:	gnustep-make-devel
 BuildRequires:	libao-devel
+BuildRequires:	libicns-devel
 BuildRequires:	libicu-devel >= 4.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -63,10 +64,7 @@ Summary:	GNUstep GUI headers and libs
 Summary(pl.UTF-8):	Pliki nagłówkowe GNUstep GUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	audiofile-devel
 Requires:	gnustep-base-devel >= 1.13.0
-Requires:	libjpeg-devel
-Requires:	libtiff-devel
 Conflicts:	gnustep-core
 
 %description devel
@@ -81,6 +79,7 @@ biblioteki GNUstep GUI.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 export GNUSTEP_MAKEFILES=%{_datadir}/GNUstep/Makefiles

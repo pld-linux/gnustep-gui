@@ -1,0 +1,57 @@
+--- gnustep-gui-0.24.0/Source/NSBitmapImageRep+GIF.m.orig	2013-11-24 12:56:33.000000000 +0100
++++ gnustep-gui-0.24.0/Source/NSBitmapImageRep+GIF.m	2014-07-26 09:06:35.620852420 +0200
+@@ -161,7 +161,11 @@
+       return NO;
+     }
+ 
++#if (GIFLIB_MAJOR > 5) || ((GIFLIB_MAJOR == 5) && (GIFLIB_MINOR >= 1))
++  DGifCloseFile(file, NULL);
++#else
+   DGifCloseFile(file);
++#endif
+   return YES;
+ }
+ 
+@@ -176,11 +180,17 @@
+        NSLog(@"%@", msg);\
+      }
+ 
++#if (GIFLIB_MAJOR > 5) || ((GIFLIB_MAJOR == 5) && (GIFLIB_MINOR >= 1))
++#  define GIF_CLOSE_FILE(file) DGifCloseFile(file, NULL)
++#else
++#  define GIF_CLOSE_FILE(file) DGifCloseFile(file)
++#endif
++
+ #define GIF_CREATE_ERROR(msg) \
+    SET_ERROR_MSG(msg); \
+    if (file != NULL) \
+      {\
+-       DGifCloseFile(file); \
++       GIF_CLOSE_FILE(file); \
+      }\
+    if (imgBuffer != NULL) \
+      {\
+@@ -392,7 +402,11 @@
+           withValue: [NSNumber numberWithInt: 0]];
+ 
+   /* don't forget to close the gif */
++#if (GIFLIB_MAJOR > 5) || ((GIFLIB_MAJOR == 5) && (GIFLIB_MINOR >= 1))
++  DGifCloseFile(file, NULL);
++#else
+   DGifCloseFile(file);
++#endif
+ 
+   return self;
+ }
+@@ -560,7 +574,11 @@
+ 	}
+       GIFImageP += width;
+     }
++#if (GIFLIB_MAJOR > 5) || ((GIFLIB_MAJOR == 5) && (GIFLIB_MINOR >= 1))
++  status = EGifCloseFile(GIFFile, NULL);
++#else
+   status = EGifCloseFile(GIFFile);
++#endif
+ 
+   free(GIFImage);
+ 
