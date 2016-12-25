@@ -9,7 +9,7 @@ Summary(pl.UTF-8):	Biblioteka GNUstep GUI
 Name:		gnustep-gui
 %define	ver	0.24
 Version:	%{ver}.0
-Release:	7
+Release:	8
 License:	LGPL v2+ (library), GPL v3+ (applications)
 Group:		Libraries
 Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
@@ -17,6 +17,7 @@ Source0:	ftp://ftp.gnustep.org/pub/gnustep/core/%{name}-%{version}.tar.gz
 Patch0:		%{name}-nocompressdocs.patch
 Patch1:		%{name}-doc.patch
 Patch2:		%{name}-giflib.patch
+Patch3:		imagemagick7.patch
 URL:		http://www.gnustep.org/
 %{?with_magick:BuildRequires:	ImageMagick-devel}
 BuildRequires:	aspell-devel
@@ -80,6 +81,7 @@ biblioteki GNUstep GUI.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export GNUSTEP_MAKEFILES=%{_datadir}/GNUstep/Makefiles
