@@ -1,0 +1,81 @@
+diff -ru gnustep-gui-0.24.0.orig/Source/GSCharacterPanel.m gnustep-gui-0.24.0/Source/GSCharacterPanel.m
+--- gnustep-gui-0.24.0.orig/Source/GSCharacterPanel.m	2012-12-16 23:51:23.000000000 +0100
++++ gnustep-gui-0.24.0/Source/GSCharacterPanel.m	2021-08-16 20:39:11.913095999 +0200
+@@ -78,7 +78,7 @@
+ static UBool enumCharNamesFn(void *context, UChar32 code, UCharNameChoice nameChoice, const char *name, int32_t length)
+ {
+   [(NSMutableIndexSet*)context addIndex: (NSUInteger)code];
+-  return TRUE;
++  return 1;
+ }
+ 
+ static NSIndexSet *AssignedCodepoints()
+@@ -103,7 +103,7 @@
+     {
+       [ctx->set addIndex: (NSUInteger)code];
+     }
+-  return TRUE;
++  return 1;
+ }
+ 
+ static NSIndexSet *CodepointsWithNameContainingSubstring(NSString *str)
+diff -ru gnustep-gui-0.24.0.orig/Source/NSBitmapImageRep+JPEG.m gnustep-gui-0.24.0/Source/NSBitmapImageRep+JPEG.m
+--- gnustep-gui-0.24.0.orig/Source/NSBitmapImageRep+JPEG.m	2013-12-06 18:45:37.000000000 +0100
++++ gnustep-gui-0.24.0/Source/NSBitmapImageRep+JPEG.m	2021-08-16 20:39:51.238754691 +0200
+@@ -149,7 +149,7 @@
+   src->parent.next_input_byte = src->data;
+   src->parent.bytes_in_buffer = src->length;
+ 
+-  return TRUE;
++  return 1;
+ }
+ 
+ 
+@@ -278,7 +278,7 @@
+   dest->pub.next_output_byte = dest->buffer;
+   dest->pub.free_in_buffer = imageSize * cinfo->input_components;
+ 
+-  return TRUE;
++  return 1;
+ }
+ 
+ /*
+@@ -372,7 +372,7 @@
+   /* Establish our own data source manager */
+   gs_jpeg_memory_src_create(&cinfo, imageData);
+ 
+-  jpeg_read_header(&cinfo, TRUE);
++  jpeg_read_header(&cinfo, 1);
+   gs_jpeg_memory_src_destroy(&cinfo);
+   jpeg_destroy_decompress(&cinfo);
+ 
+@@ -427,7 +427,7 @@
+   /* Establish our own data source manager */
+   gs_jpeg_memory_src_create(&cinfo, imageData);
+ 
+-  jpeg_read_header(&cinfo, TRUE);
++  jpeg_read_header(&cinfo, 1);
+ 
+   /* we use RGB as target color space; others are not yet supported */
+   cinfo.out_color_space = JCS_RGB;
+@@ -622,8 +622,8 @@
+ 
+   // compress the image
+ 
+-  jpeg_set_quality (&cinfo, quality, TRUE);
+-  jpeg_start_compress (&cinfo, TRUE);
++  jpeg_set_quality (&cinfo, quality, 1);
++  jpeg_start_compress (&cinfo, 1);
+ 
+   if (isRGB && [self hasAlpha])	// strip alpha channel before encoding
+     {
+diff -ru gnustep-gui-0.24.0.orig/Source/win32-entry.c gnustep-gui-0.24.0/Source/win32-entry.c
+--- gnustep-gui-0.24.0.orig/Source/win32-entry.c	2008-06-10 06:01:49.000000000 +0200
++++ gnustep-gui-0.24.0/Source/win32-entry.c	2021-08-16 20:39:15.659666577 +0200
+@@ -77,5 +77,5 @@
+ 	{
+ 	}
+ 
+-    return TRUE;
++    return 1;
+ }

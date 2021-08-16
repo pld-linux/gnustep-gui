@@ -18,6 +18,7 @@ Patch0:		%{name}-nocompressdocs.patch
 Patch1:		%{name}-doc.patch
 Patch2:		%{name}-giflib.patch
 Patch3:		imagemagick7.patch
+Patch4:		icu68.patch
 URL:		http://www.gnustep.org/
 %{?with_magick:BuildRequires:	ImageMagick-devel}
 BuildRequires:	aspell-devel
@@ -82,6 +83,7 @@ biblioteki GNUstep GUI.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export GNUSTEP_MAKEFILES=%{_datadir}/GNUstep/Makefiles
